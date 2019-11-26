@@ -11,7 +11,7 @@ class Runner :
         print(">>> Collecting config info, GraphDrawer instance, DataLoader instance , DefaultBoxControl instance... Done!")
         #self.sess = tf.Session(graph = tf.get_default_graph(), config=tf.ConfigProto(log_device_placement=True))
         self.sess = tf.Session(graph=tf.get_default_graph())
-        self.saver = tf.train.Saver()  # tensorflow ckpt poto buff
+        self.saver = tf.train.Saver()  # tensorflow ckpt proto buff
           # tensorflow summary proto buff
 
         self.config = config
@@ -31,8 +31,10 @@ class Runner :
         #print(tf.global_variables()[0])
         self.sess.run(tf.global_variables_initializer())
 
+        # load / save checkpoints
         ckpt = tf.train.get_checkpoint_state(c["saved_dir"])
 
+        #resume training if a checkpoint exists
         if ckpt and ckpt.model_checkpoint_path:
             last_step = int(ckpt.model_checkpoint_path.split("-")[-1])
             self.saver.restore(self.sess, ckpt.model_checkpoint_path)
@@ -101,7 +103,7 @@ class Runner :
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-                print("SAVED AT : ", ckpt_path)
+                print("MODEL SAVED AT : ", ckpt_path)
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
                 print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
@@ -205,7 +207,7 @@ class Runner :
 
 
         else :
-            raise FileNotFoundError("ckpt저장 폴더에서 불러올 ckpt 파일을 찾지 못했습니다")
+            raise FileNotFoundError("ckpt Load From Storage Folder ckpt File not Found")
 
 
 
@@ -269,7 +271,7 @@ class Runner :
 
 
         else :
-            raise FileNotFoundError("ckpt저장 폴더에서 불러올 ckpt 파일을 찾지 못했습니다")
+            raise FileNotFoundError("ckptLoad From Storage Folder ckptFile not Found")
 
 
 
